@@ -13,6 +13,22 @@ bgImage.onload = function(){
 };
 bgImage.src = "./background.png";
 
+// Hero image
+var heroReady = false;
+var heroImage = new Image();
+heroImage.onload = function () {
+	heroReady = true;
+};
+heroImage.src = "hero.png";
+
+// Monster image
+var monsterReady = false;
+var monsterImage = new Image();
+monsterImage.onload = function () {
+	monsterReady = true;
+};
+monsterImage.src = "monster.png";
+
 //Game Objects
 var hero = {
     speed: 256,  //movement in pixels per second
@@ -31,11 +47,11 @@ var monstersCaught = 0;
 var keysDown = {};
 
 addEventListener("keydown", function (e) {
-    keysDown[e.key] = true;
+    keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function (e){
-    delete keysDown[e.key];
+    delete keysDown[e.keyCode];
 }, false);
 
 //Reset the game when the player catches a monster
@@ -85,7 +101,7 @@ var render = function(){
         ctx.drawImage(heroImage,hero.x,hero.y);
     }
 
-    if(monsterReac){
+    if(monsterReady){
         ctx.drawImage(monsterImage,monster.x, monster.y);
     }
 
@@ -94,13 +110,13 @@ var render = function(){
     ctx.font = "24px Helvetica";
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("Monsters caught: " + monstersCaught .32 ,32); 
+    ctx.fillText("Monsters caught: " + monstersCaught ,32 ,32); 
 };
 
 // The main game loop
 var main = function(){
     var now = Date.now();
-    var delete = now - then;
+    var delta = now - then;
 
     update(delta / 1000);
     render();
